@@ -3,7 +3,7 @@
 
 # Group Account
 
-### GET users/me
+### GET /users/me
 
 This is an object representing your Kangaroo account. You can retrieve it to see properties on the account like its current e-mail address, settings etc.
 
@@ -14,12 +14,13 @@ GET /users/me HTTP/1.1
 Host: api.kangaroorewards.com
 Authorization: Bearer eyJ0eXAiOiJKV1QiLC
 Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
 Content-Type: application/json
 ```
 
 > **NOTE:** You could also request more information using include parameter. All possible values:
-- **rewards** - include business offers and rewards in the response
-- **businesses** - include business branches in the response
+> - **rewards** - include business offers and rewards in the response
+> - **businesses** - include business branches in the response
 
 Example
 ```
@@ -31,14 +32,15 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=rewards
     
             Authorization: Bearer <access_token>
             Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
 
 + Response 200 (application/json)
     + Attributes
-        - data (Account Base)
+        - data (Account)
 
 # Data Structures
 
-## Account Base (object)
+## Account (object)
 
 + id: `11e696103f8ff5eabb02089e01cf89b5` (string)
 + profile
@@ -48,11 +50,12 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=rewards
     + first_name: John (string)
     + last_name: Doe (string)
 + businesses (array)
-    + `id`: 22e696103f8fa5eabb02089e01cf89c1 (string)
-    + `name`: `Retrorant` (string)
-    + `loyalty_type`: `per_visit` (string)
-    + `about`: `Retrorant has cuisines in houses across the city.` (string)
-    + `logo`: `https://www.kangaroorewards.com/photos/1473392787_57d23093693fe.jpg` (string)
-    + `cover`: `https://www.kangaroorewards.com/photos/1465232980_5755ae54d57635.61967004.jpg` (string)
+    + (object)
+        * id: `22e696103f8fa5eabb02089e01cf89c1` (string)
+        * name: `Retrorant` (string)
+        * `loyalty_type`: `per_visit` (string)
+        * `about`: `Retrorant has cuisines in houses across the city.` (string)
+        * `logo`: `57d23093693fe.jpg` (string)
+        * `cover`: `5755ae54d57635.61967004.jpg` (string)
 
 
