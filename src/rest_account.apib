@@ -3,7 +3,7 @@
 
 # Group Account
 
-### GET /users/me
+### GET /users/me{?include}
 
 This is an object representing your Kangaroo account. You can retrieve it to see properties on the account like its current e-mail address, settings etc.
 
@@ -19,13 +19,23 @@ Content-Type: application/json
 ```
 
 > **NOTE:** You could also request more information using include parameter. All possible values:
-> - **rewards** - include business offers and rewards in the response
 > - **businesses** - include business branches in the response
+> - **balance** - include user balance for business
+> - **catalog_items** - include catalog items in the response
+> - **offers** - include published offers
+> - **giftcards** - include active gift cards
+> - **products** - include published products
 
 Example
 ```
-https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=rewards
+https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=catalog_items
 ```
+
+> **NOTE:** `businesses` parameter is applicable only for a coalition not for a regular business
+
+> **NOTE:** When `balance` is included and `X-Application-Key` belongs to a coalition, then each business 
+> will have a `balance` object that represents the authenticated user's `balance` for respective businesses.
+> Also, the response includes the balance object that represents cumulative balance for all the businesses under the coalition
 
 + Request
     + Headers
@@ -34,9 +44,43 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=rewards
             Accept: application/vnd.kangaroorewards.api.v1+json;
             X-Application-Key: <your_application_key>
 
++ Parameters
+    + include%5B%5D%3Dbusinesses (optional) - Includes businesses object in the response
+
 + Response 200 (application/json)
     + Attributes
         - data (Account)
+
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+
++ Parameters
+    + include%5B%5D%3Dbusinesses (optional) - Includes businesses object in the response
+    + include%5B%5D%3Dbalance (optional) - Includes user's balance for each business in the response
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Account Include Balance)
+
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+
++ Parameters
+    + include%5B%5D%3Dcatalog_items (optional) - Includes Catalog Items in the response
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Account Include Catalog)
 
 # Data Structures
 
@@ -58,4 +102,60 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=rewards
         * `logo`: `57d23093693fe.jpg` (string)
         * `cover`: `5755ae54d57635.61967004.jpg` (string)
 
+## Account Include Balance (object)
 
++ id: `11e696103f8ff5eabb02089e01cf89b5` (string)
++ profile
+    + id: `11e696103f8ff5eabb02089e01cf89b5` (string)
+    + username: johndoe (string)
+    + email: johndoe@example.com (string)
+    + first_name: John (string)
+    + last_name: Doe (string)
++ balance
+    + `points`: 3000 (number)
+    + `giftcard`: 15.20 (number)
++ businesses (array)
+    + (object)
+        * `id`: `22e696103f8fa5eabb02089e01cf89c1` (string)
+        * `name`: `Retrorant` (string)
+        * `loyalty_type`: `per_visit` (string)
+        * `about`: `Retrorant has cuisines in houses across the city.` (string)
+        * `logo`: `57d23093693fe.jpg` (string)
+        * `cover`: `5755ae54d57635.61967004.jpg` (string)
+        * `balance` (object)
+            - `points`: 1000 (number)
+            - `giftcard`: 10.00 (number)
+    + (object)
+        * `id`: `11e72ab54e056acc90ac089e01cf89b5` (string)
+        * `name`: `GymTonik` (string)
+        * `loyalty_type`: `per_visit` (string)
+        * `about`: `At GymTonik, we help you love your body and tone it in a way that fits your image.` (string)
+        * `logo`: `5400f316d08672.jpg` (string)
+        * `cover`: `1493234454_5900f316708678.24867196.jpg` (string)
+        * `balance` (object)
+            - `points`: 2000 (number)
+            - `giftcard`: 5.20 (number)
+
+
+## Account Include Catalog (object)
+
++ id: `11e696103f8ff5eabb02089e01cf89b5` (string)
++ profile
+    + id: `11e696103f8ff5eabb02089e01cf89b5` (string)
+    + username: johndoe (string)
+    + email: johndoe@example.com (string)
+    + first_name: John (string)
+    + last_name: Doe (string)
++ catalog_items (array)
+    + (object)
+        * id: 345
+        * title: `$20 Discount` (string)
+        * points: 3000
+        * partner_reward: false (boolean)
+        * expires_at: `2027-06-27T02:59:59+00:00` (string)
+    + (object)
+        * id: 578
+        * title: `Redeem 1 week at Palace Resort` (string)
+        * points: 50000
+        * partner_reward: true (boolean)
+        * expires_at: `2027-04-27T02:59:59+00:00` (string)
