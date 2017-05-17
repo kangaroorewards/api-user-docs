@@ -81,6 +81,73 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=catalog_
     + Attributes
         - data (Account Include Catalog)
 
+
+### POST /users
+
+Create a new user.
+
+*Body parameters*
+|Name|Type|Description|
+|-----|----|-----------|
+|email|string|Required if no phone number provided|
+|phone|string|Required if no email provided|
+|country_code|string|The customer's country, in ISO 3166-1-alpha-2 format.|
+|first_name|string|First Name|
+|last_name|string|Last Name|
+|language|string|Communication language. Possible values `en` - English, `fr` - French, `es` - Spanish|
+|gender|string|Possible values `male`, `female`|
+
+Example
+
+```
+POST /users HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "email": "johndoe@example.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "pin_code": 1111
+}
+```
+
+Respone Body
+```
+{
+    "data": {
+        "id": "11e69610410894b2bb02089e01cf89b5",
+        "email": "johndoe@example.com",
+        "phone": "",
+        "first_name": "John",
+        "last_name": "Doe"
+    }
+}
+```
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+
+    + Attributes (User Create)
+
++ Response 200 (application/json)
+    + Attributes
+        - data (User)
+
++ Response 400 (application/json)
+    + Attributes (Error 400)
+
++ Response 422 (application/json)
+    + Attributes (Error 422)
+
+
 # Data Structures
 
 ## Account (object)
@@ -158,3 +225,41 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=catalog_
         * points: 50000
         * partner_reward: true (boolean)
         * expires_at: `2027-04-27T02:59:59+00:00` (string)
+
+## User (object)
+
++ id: `11e696103f8ff5eabb02089e01cf89b5` (string)
++ first_name: `Battery` (string) - User's first name.
++ last_name: `Harris` (string) - User's last name.
++ email: `johndoe@example.com` (string)
++ phone: `5141234567` (string)
++ birthday: `1963-03-28` (string) - Birthday
++ gender: `male` (string) - User's gender. Can be `male` or `female`
+
+## User Create (object)
+
++ first_name: `Battery` (string)
++ last_name: `Harris` (string)
++ email: `johndoe@example.com` (string, required)
++ birthday: `1963-03-28` (string) - Birthday
++ language: `en` (string) - Communication language. Possible values `en` - English, `fr` - French, `es` - Spanish
++ gender: `male` (string) - User's gender. Can be male or female
+
+## Error 400 (object)
+
++ code: `400` (number)
++ error: `Bad Request` (string)
++ message: `Invalid ID supplied` (string)
+
+## Error 404 (object)
+
++ code: `404` (number)
++ error: `Not found` (string)
++ message: `User not found` (string)
+
+## Error 422 (object)
+
++ email (array)
+    + `The email field is required` (string)
++ phone (array)
+    + `The phone field is required` (string)
