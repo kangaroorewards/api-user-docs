@@ -3,6 +3,72 @@
 
 # Group Account
 
+### POST /users
+
+Create a new user.
+
+*Body parameters*
+|Name|Type|Description|
+|-----|----|-----------|
+|email|string|Required if no phone number provided|
+|phone|string|Required if no email provided|
+|country_code|string|The customer's country, in ISO 3166-1-alpha-2 format.|
+|first_name|string|First Name|
+|last_name|string|Last Name|
+|language|string|Communication language. Possible values `en` - English, `fr` - French, `es` - Spanish|
+|gender|string|Possible values `male`, `female`|
+
+Example
+
+```
+POST /users HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "email": "johndoe@example.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "pin_code": 1111
+}
+```
+
+Respone Body
+```
+{
+    "data": {
+        "id": "11e69610410894b2bb02089e01cf89b5",
+        "email": "johndoe@example.com",
+        "phone": "",
+        "first_name": "John",
+        "last_name": "Doe"
+    }
+}
+```
+
++ Request (application/json)
+
+    + Headers
+    
+            X-Application-Key: <your_application_key>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+
+    + Attributes (User Create)
+
++ Response 200 (application/json)
+    + Attributes
+        - data (User)
+
++ Response 400 (application/json)
+    + Attributes (Error 400)
+
++ Response 422 (application/json)
+    + Attributes (Error 422)
+
+
 ### GET /users/me{?include}
 
 This is an object representing your Kangaroo account. You can retrieve it to see properties on the account like its current e-mail address, settings etc.
@@ -80,72 +146,6 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=catalog_
 + Response 200 (application/json)
     + Attributes
         - data (Account Include Catalog)
-
-
-### POST /users
-
-Create a new user.
-
-*Body parameters*
-|Name|Type|Description|
-|-----|----|-----------|
-|email|string|Required if no phone number provided|
-|phone|string|Required if no email provided|
-|country_code|string|The customer's country, in ISO 3166-1-alpha-2 format.|
-|first_name|string|First Name|
-|last_name|string|Last Name|
-|language|string|Communication language. Possible values `en` - English, `fr` - French, `es` - Spanish|
-|gender|string|Possible values `male`, `female`|
-
-Example
-
-```
-POST /users HTTP/1.1
-Host: api.kangaroorewards.com
-Authorization: Bearer eyJ0eXAiOiJKV1QiLC
-Accept: application/vnd.kangaroorewards.api.v1+json;
-X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
-Content-Type: application/json
-
-{
-    "email": "johndoe@example.com",
-    "first_name": "John",
-    "last_name": "Doe",
-    "pin_code": 1111
-}
-```
-
-Respone Body
-```
-{
-    "data": {
-        "id": "11e69610410894b2bb02089e01cf89b5",
-        "email": "johndoe@example.com",
-        "phone": "",
-        "first_name": "John",
-        "last_name": "Doe"
-    }
-}
-```
-
-+ Request (application/json)
-
-    + Headers
-    
-            Authorization: Bearer <access_token>
-            Accept: application/vnd.kangaroorewards.api.v1+json;
-
-    + Attributes (User Create)
-
-+ Response 200 (application/json)
-    + Attributes
-        - data (User)
-
-+ Response 400 (application/json)
-    + Attributes (Error 400)
-
-+ Response 422 (application/json)
-    + Attributes (Error 422)
 
 
 # Data Structures
