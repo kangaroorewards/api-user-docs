@@ -1,0 +1,78 @@
+# Rewards
+
+# Group Rewards
+
+### GET /users/rewards
+
+Provides the details for all of a business's rewards.
+
+Example
+
+```
+GET /rewards HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyXai0XD7SLLzaOeJW
+Content-Type: application/json
+```
+
+Response Body
+```
+{
+  "data": {
+    "custom_rewards": [
+      {
+        "id": 35,
+        "points": 500,
+        "title": "Download Kangaroo App and Earn",
+        "description": "",
+        "images": []
+      }
+    ],
+    "catalog_items": [
+      {
+        "id": 135,
+        "points": 2000,
+        "title": "$20 Discount",
+        "description": "",
+        "images": []
+      }
+    ]
+  }
+}
+```
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Rewards Base)
+
+# Data Structures
+
+## Rewards Base (object)
+
++ custom_rewards (array)
+    + (object)
+        + id: 123
+        + title: `Download Kangaroo App and Earn` (string)
+        + points: 150
++ catalog_items (array)
+    + (object)
+        * id: 345
+        * title: `$20 Discount` (string)
+        * points: 3000
+        * partner_reward: false (boolean)
+        * expires_at: `2027-06-27T02:59:59+00:00` (string)
+    + (object)
+        * id: 578
+        * title: `Redeem 1 week at Palace Resort` (string)
+        * points: 50000
+        * partner_reward: true (boolean)
+        * expires_at: `2027-04-27T02:59:59+00:00` (string)

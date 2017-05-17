@@ -1,0 +1,90 @@
+# Transactions
+
+# Group Transactions
+
+### POST /users/transactions
+
+A Transaction is a single event where a customer earns or spends points.
+
+Also, you can retrieve a specific transaction or a list of transactions.
+
+Use `/users/transactions` resource to create a **reward**, or **redeem** transaction.
+
+A `reward` transaction will **increase** the user's balance.
+
+A `redeem` transaction will **decrease** the user's balance.
+
+Include `catalog_items` object when you want to redeem a "Redemption Catalog" item. To be used for `redeem` transaction only.
+
+*Body parameters*
+|Name|Type|Description|
+|-----|----|-----------|
+|intent|string|Set the `intent` to: `reward` or `redeem`|
+|catalog_items|object|Required. The Catalog Item to be redeemed|
+|catalog_items.id|string|Required. The ID of the Catalog Item|
+|catalog_items.quantity|number|Required. The quantity|
+
+Example Redeem a Catalog Item
+```
+POST /users/transactions HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyXai0XD7SLLzaOeJW
+Content-Type: application/json
+
+{
+    "intent": "redeem",
+    "catalog_items": [
+        {
+            "id": 123,
+            "quantity": 1
+        }
+    ]
+}
+```
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json
+            Content-Type: application/json
+            X-Application-Key: <your_application_key>
+
+    + Attributes (Redeem Partner Rewaard)
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Redeem Response)
+
++ Response 422 (application/json)
+    + Attributes (Transactions Error 422)
+
+
+# Data Structures
+
+## Redeem Partner Rewaard(object)
+
++ intent: `redeem` (string)
++ catalog_items (array)
+    + (object) 
+        * id: 123 (number) 
+        * quantity: 3 (number)
+    + (object) 
+        * id: 124 (number) 
+        * quantity: 1 (number)
+
+## Redeem Response(object)
+
++ id: `256559` (number)
++ amount: `5.25` (number)
++ points: `5` (number)
++ name: `Reward` (string)
++ created_at: `2017-03-06T19:45:47+0000` (string)
+
+## Transactions Error 422 (object)
+
++ catalog_items.id (array)
+    + `The selected catalog_items.id is invalid.` (string)
+
