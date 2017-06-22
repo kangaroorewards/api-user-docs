@@ -2,14 +2,14 @@
 
 # Group Offers
 
-### GET /users/{user_id}/offers
+### GET /users/me/offers
 
 Provides the details for all of a business's offers.
 
 Example
 
 ```
-GET /users/{user_id}/offers HTTP/1.1
+GET /users/me/offers HTTP/1.1
 Host: api.kangaroorewards.com
 Authorization: Bearer eyJ0eXAiOiJKV1QiLC
 Accept: application/vnd.kangaroorewards.api.v1+json;
@@ -54,14 +54,14 @@ Response Body
     + Attributes
         - data (Offers Base)
 
-### GET /users/{user_id}/offers/{offer_id}
+### GET /users/me/offers/{offer_id}
 
 Returns a single offer.
 
 Path Parameters
 |Name|Type|Description|
 |-----|----|-----------|
-|user_id|string|`Required.` The ID of the user|
+|me|string|`Required.` The ID of the user|
 |offer_id|number|`Required.` The ID of the offer|
 
 Query Parameters
