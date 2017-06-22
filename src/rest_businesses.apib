@@ -2,14 +2,14 @@
 
 # Group Businesses
 
-### GET /users/{user_id}/businesses
+### GET /users/me/businesses
 
 Provides the list of businesses.
 
 Example
 
 ```
-GET /users/{user_id}/businesses HTTP/1.1
+GET /users/me/businesses HTTP/1.1
 Host: api.kangaroorewards.com
 Authorization: Bearer eyJ0eXAiOiJKV1QiLC
 Accept: application/vnd.kangaroorewards.api.v1+json;
@@ -57,14 +57,14 @@ Response Body
     + Attributes
         - data (Businesses List)
 
-### GET /users/{user_id}/businesses/{business_id}
+### GET /users/me/businesses/{business_id}
 
 Returns a single business.
 
 Path Parameters
 |Name|Type|Description|
 |-----|----|-----------|
-|user_id|string|`Required.` The ID of the user|
+|me|string|`Required.` The ID of the user|
 |business_id|string|`Required.` The ID of the business|
 
 Query Parameters
