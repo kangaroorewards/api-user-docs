@@ -1,0 +1,196 @@
+# Businesses
+
+# Group Businesses
+
+### GET /users/{user_id}/businesses
+
+Provides the list of businesses.
+
+Example
+
+```
+GET /users/{user_id}/businesses HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyXai0XD7SLLzaOeJW
+Content-Type: application/json
+```
+
+Response Body
+```
+{
+    "data": [
+        {
+            "id": "11e72ab54e056acc90ac089e01cf89b5",
+            "name": "Home Heating Company",
+            "loyalty_type": "per_spend",
+            "about": " We specialize in home heating by providing the security and benefit of 24\/7 emergency service",
+            "logo": {
+                "large": "1493234454_5900f316708678.24867196.jpg",
+                "medium": "1493234454_5900f316708678.24867196.jpg",
+                "thumbnail": "493234454_5900f316708678.24867196.jpg"
+            },
+            "cover_photo": {
+                "large": null,
+                "medium": null,
+                "thumbnail": null
+            },
+            "category": {
+                "id": 2,
+                "name": "Services",
+                "code": "FRONTEND_BUS_CAT_SERVICES"
+            }
+        }
+    ]
+}
+```
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Businesses List)
+
+### GET /users/{user_id}/businesses/{business_id}
+
+Returns a single business.
+
+Path Parameters
+|Name|Type|Description|
+|-----|----|-----------|
+|user_id|string|`Required.` The ID of the user|
+|business_id|string|`Required.` The ID of the business|
+
+Query Parameters
+|Name|Type|Description|
+|-----|----|-----------|
+|include|array|`Optional.` You can optionally request that the response include the balance object. To do so, specify include[]=balance in your request.|
+
+
+Example
+```
+GET /users/me/businesses/{business_id}?include[]=branches HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyXai0XD7SLLzaOeJW
+Content-Type: application/json
+```
+
+Response Body
+```
+{
+    "data": {
+        "id": "11e72ab54e056acc90ac089e01cf89b5",
+        "name": "Home Heating Company",
+        "loyalty_type": "per_spend",
+        "about": " We specialize in home heating by providing the security and benefit of 24\/7 emergency service",
+        "logo": {
+            "large": "1493234454_5900f316708678.24867196.jpg",
+            "medium": "1493234454_5900f316708678.24867196.jpg",
+            "thumbnail": "493234454_5900f316708678.24867196.jpg"
+        },
+        "cover_photo": {
+            "large": null,
+            "medium": null,
+            "thumbnail": null
+        },
+        "category": {
+            "id": 2,
+            "name": "Services",
+            "code": "FRONTEND_BUS_CAT_SERVICES"
+        }
+    }
+}
+```
+
++ Parameters
+    + user_id: `11e696103f8ff5eabb02089e01cf89b5` - The unique ID of the user.
+    + business_id: `123` - The unique ID of the business.
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Business Base)
+
++ Response 404 (application/json)
+    + Attributes (Business Error 404)
+
+
+# Data Structures
+
+## Businesses List (array)
+
++ (object)
+    * id: `11e72ab54e056acc90ac089e01cf89b5`
+    * name: `Home Heating Company` (string)
+    * loyalty_type: `per_spend` (string)
+    * about: `About us ...` (string)
+    * category (object)
+        - id: 3 (number)
+        - name: Bars (string)
+        - code: FRONTEND_BUS_CAT_SERVICES (string)
+    * logo (object)
+        - large: `\large\5900f316708678.24867196.jpg` (string)
+        - medium: `\medium\5900f316708678.24867196.jpg` (string)
+        - thumbnail: `\thumbnail\5900f316708678.24867196.jpg` (string)
+    * cover_photo (object)
+        - large: `\large\5941858e71c90.jpg` (string)
+        - medium: `\medium\5941858e71c90.jpg` (string)
+        - thumbnail: `\thumbnail\5941858e71c90.jpg` (string)
++ (object)
+    * id: `12e32ab54e046acc90ac089e01cf89b2`
+    * name: `Another Company` (string)
+    * loyalty_type: `per_spend` (string)
+    * about: `About us ...` (string)
+    * category (object)
+        - id: 1 (number)
+        - name: Services (string)
+        - code: FRONTEND_BUS_CAT_SERVICES (string)
+    * logo (object)
+        - large: `\large\1200f316708678.24867196.jpg` (string)
+        - medium: `\medium\1200f316708678.24867196.jpg` (string)
+        - thumbnail: `\thumbnail\1200f316708678.24867196.jpg` (string)
+    * cover_photo (object)
+        - large: `\large\5941858e71c90.jpg` (string)
+        - medium: `\medium\5941858e71c90.jpg` (string)
+        - thumbnail: `\thumbnail\5941858e71c90.jpg` (string)
+
+## Business Base (object)
+
++ id: `11e72ab54e056acc90ac089e01cf89b5`
++ name: `Home Heating Company` (string)
++ loyalty_type: `per_spend` (string)
++ about: `About us ...` (string)
++ category (object)
+    - id: 3 (number)
+    - name: Bars (string)
+    - code: FRONTEND_BUS_CAT_SERVICES (string)
++ logo (object)
+    - large: `\large\5900f316708678.24867196.jpg` (string)
+    - medium: `\medium\5900f316708678.24867196.jpg` (string)
+    - thumbnail: `\thumbnail\5900f316708678.24867196.jpg` (string)
++ cover_photo (object)
+    - large: `\large\5941858e71c90.jpg` (string)
+    - medium: `\medium\5941858e71c90.jpg` (string)
+    - thumbnail: `\thumbnail\5941858e71c90.jpg` (string)
+
+
+## Business Error 404 (object)
+
++ error (object)
+    - status_code: 404 (number)
+    - message: `Business 11e72abc90ac089e01cf89b5 Not Found` (string)
+    - description: `The requested resource doesn't exist.` (string)

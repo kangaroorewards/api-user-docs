@@ -1,0 +1,164 @@
+# Offers
+
+# Group Offers
+
+### GET /users/{user_id}/offers
+
+Provides the details for all of a business's offers.
+
+Example
+
+```
+GET /users/{user_id}/offers HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyXai0XD7SLLzaOeJW
+Content-Type: application/json
+```
+
+Response Body
+```
+{
+    "data": [
+        {
+            "id": 123,
+            "points": 0,
+            "expires_at": "2017-07-01T03:59:59+0000",
+            "discount_value": 0,
+            "multip_factor": 0,
+            "real_value": 0,
+            "type": "free_product",
+            "title": "Offer Title",
+            "description": "",
+            "images": [
+                {
+                    "default": true,
+                    "path": "1498064009_594aa4895e8c7.jpg"
+                }
+            ],
+            "branch_name": "Some Branch Name"
+        }
+    ]
+}
+```
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Offers Base)
+
+### GET /users/{user_id}/offers/{offer_id}
+
+Returns a single offer.
+
+Path Parameters
+|Name|Type|Description|
+|-----|----|-----------|
+|user_id|string|`Required.` The ID of the user|
+|offer_id|number|`Required.` The ID of the offer|
+
+Query Parameters
+|Name|Type|Description|
+|-----|----|-----------|
+|include|array|`Optional.` You can optionally request that the response include the balance object. To do so, specify include[]=balance in your request.|
+
+
+Example
+```
+GET /users/me/offers/{offer_id}?include[]=branches HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyXai0XD7SLLzaOeJW
+Content-Type: application/json
+```
+
+Response Body
+```
+{
+    "data": {
+        "id": 123,
+        "points": 0,
+        "expires_at": "2017-07-01T03:59:59+0000",
+        "discount_value": 0,
+        "multip_factor": 0,
+        "real_value": 0,
+        "type": "free_product",
+        "title": "Offer Title",
+        "description": "",
+        "images": [
+            {
+                "default": true,
+                "path": "1498064009_594aa4895e8c7.jpg"
+            }
+        ],
+        "branch_name": "Some Branch Name"
+    }
+}
+```
+
++ Parameters
+    + user_id: `11e696103f8ff5eabb02089e01cf89b5` - The unique ID of the user.
+    + offer_id: `123` - The unique ID of the offer.
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Offer Base)
+
++ Response 404 (application/json)
+    + Attributes (Offer Error 404)
+
+
+# Data Structures
+
+## Offers Base (array)
+
++ (object)
+    * id: 111
+    * title: `Offer Title` (string)
+    * points: 3000
+    * type: `free_product` (string)
+    * description: `Some Offer Description` (string)
+    * expires_at: `2027-06-27T02:59:59+00:00` (string)
+    * multip_factor: 2 (number)
++ (object)
+    * id: 112
+    * title: `Offer Title 2` (string)
+    * points: 50000
+    * type: `free_product` (string)
+    * description: `Some Offer Description` (string)
+    * expires_at: `2027-04-27T02:59:59+00:00` (string)
+    * multip_factor: 0 (number)
+
+## Offer Base (object)
+
+- id: 111
+- title: `Offer Title` (string)
+- points: 3000
+- type: `free_product` (string)
+- description: `Some Offer Description` (string)
+- expires_at: `2027-06-27T02:59:59+00:00` (string)
+- multip_factor: 2 (number)
+
+
+## Offer Error 404 (object)
+
++ error (object)
+    - status_code: 404 (number)
+    - message: `Offer 112 Not Found` (string)
+    - description: `The requested resource doesn't exist.` (string)
+
