@@ -1,4 +1,3 @@
-
 # Account
 
 # Group Account
@@ -85,22 +84,30 @@ Content-Type: application/json
 ```
 
 > **NOTE:** You could also request more information using include parameter. All possible values:
-> - **businesses** - include business branches in the response
-> - **balance** - include user balance for business
-> - **catalog_items** - include catalog items in the response
-> - **offers** - include published offers
-> - **giftcards** - include active gift cards
-> - **products** - include published products
+> - **businesses** - includes businesses for a coalition or conglomerate in the response
+> - **branches** - includes branches for business in the response
+> - **catalog_items** - includes catalog items in the response
+> - **offers** - includes published offers in the response
+> - **giftcards** - includes active gift cards in the response
+> - **products** - includes published products in the response
+> - **social_media** - includes social media links in the response
+> - **coalition** - includes coalition object in the response
+> - **user_emails** - includes all user's emails with status in the response
+> - **balance** - includes user balance for business in the response
+> - **user_phone_numbers** - includes all user's phone numbers with status in the response
+
+The value of the include parameter MUST be a comma-separated (",") list of relationship names.
 
 Example
 ```
-https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=catalog_items
+https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
 ```
 
-> **NOTE:** `businesses` parameter is applicable only for a coalition not for a regular business
+> **NOTE:** `coalition` parameter is applicable only for a coalition business not for a regular business
+> **NOTE:** `businesses` parameter is applicable only for a coalition or conglomerate business not for a regular business
 
 > **NOTE:** When `balance` is included and `X-Application-Key` belongs to a coalition, then each business 
-> will have a `balance` object that represents the authenticated user's `balance` for respective businesses.
+> will have a `balance` object that represents the authenticated user's `balance` for the respective businesses.
 > Also, the response includes the balance object that represents cumulative balance for all the businesses under the coalition
 
 + Request
@@ -109,9 +116,6 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=catalog_
             Authorization: Bearer <access_token>
             Accept: application/vnd.kangaroorewards.api.v1+json;
             X-Application-Key: <your_application_key>
-
-+ Parameters
-    + include%5B%5D%3Dbusinesses (optional) - Includes businesses object in the response
 
 + Response 200 (application/json)
     + Attributes
@@ -126,26 +130,12 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=catalog_
             X-Application-Key: <your_application_key>
 
 + Parameters
-    + include%5B%5D%3Dbalance (optional) - Includes user's balance for each business in the response
+    + include=businesses,catalog_items (optional)
 
 + Response 200 (application/json)
     + Attributes
-        - data (Account Include Balance)
-
-
-+ Request
-    + Headers
-    
-            Authorization: Bearer <access_token>
-            Accept: application/vnd.kangaroorewards.api.v1+json;
-            X-Application-Key: <your_application_key>
-
-+ Parameters
-    + include%5B%5D%3Dcatalog_items (optional) - Includes Catalog Items in the response
-
-+ Response 200 (application/json)
-    + Attributes
-        - data (Account Include Catalog)
+        - data (Account)
+        - included (Account Include Catalog)
 
 
 # Data Structures
@@ -153,30 +143,14 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=catalog_
 ## Account (object)
 
 + id: `11e696103f8ff5eabb02089e01cf89b5` (string)
-+ profile
-    + id: `11e696103f8ff5eabb02089e01cf89b5` (string)
-    + username: johndoe (string)
-    + email: johndoe@example.com (string)
-    + first_name: John (string)
-    + last_name: Doe (string)
-+ businesses (array)
-    + (object)
-        * id: `22e696103f8fa5eabb02089e01cf89c1` (string)
-        * name: `Retrorant` (string)
-        * `loyalty_type`: `per_visit` (string)
-        * `about`: `Retrorant has cuisines in houses across the city.` (string)
-        * `logo`: `57d23093693fe.jpg` (string)
-        * `cover`: `5755ae54d57635.61967004.jpg` (string)
++ username: johndoe (string)
++ email: johndoe@example.com (string)
++ first_name: John (string)
++ last_name: Doe (string)
+
 
 ## Account Include Balance (object)
 
-+ id: `11e696103f8ff5eabb02089e01cf89b5` (string)
-+ profile
-    + id: `11e696103f8ff5eabb02089e01cf89b5` (string)
-    + username: johndoe (string)
-    + email: johndoe@example.com (string)
-    + first_name: John (string)
-    + last_name: Doe (string)
 + balance
     + `points`: 3000 (number)
     + `giftcard`: 15.20 (number)
@@ -205,13 +179,6 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=catalog_
 
 ## Account Include Catalog (object)
 
-+ id: `11e696103f8ff5eabb02089e01cf89b5` (string)
-+ profile
-    + id: `11e696103f8ff5eabb02089e01cf89b5` (string)
-    + username: johndoe (string)
-    + email: johndoe@example.com (string)
-    + first_name: John (string)
-    + last_name: Doe (string)
 + catalog_items (array)
     + (object)
         * id: 345
@@ -225,6 +192,14 @@ https://api.kangaroorewards.com/users/me?include[]=businesses&include[]=catalog_
         * points: 50000
         * partner_reward: true (boolean)
         * expires_at: `2027-04-27T02:59:59+00:00` (string)
++ businesses (array)
+    + (object)
+        * id: `22e696103f8fa5eabb02089e01cf89c1` (string)
+        * name: `Retrorant` (string)
+        * `loyalty_type`: `per_visit` (string)
+        * `about`: `Retrorant has cuisines in houses across the city.` (string)
+        * `logo`: `57d23093693fe.jpg` (string)
+        * `cover`: `5755ae54d57635.61967004.jpg` (string)
 
 ## User (object)
 
