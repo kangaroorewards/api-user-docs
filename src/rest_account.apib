@@ -2,7 +2,7 @@
 
 User resource allows to list users, create a new user, update user.
 
-### POST [/users]
+### POST /users
 
 Creates a new user.
 
@@ -72,7 +72,7 @@ Respone Body
     + Attributes (Error 422)
 
 
-### GET [/users/{user_id}{?include}]
+### GET /users/{user_id}{?include}
 
 Get a single user by ID
 
@@ -148,7 +148,7 @@ https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
         - included (Account Include Catalog)
 
 
-### PATCH [/users/{user_id}]
+### PATCH /users/{user_id}
 
 Allows you to update e-mail address, name, phone number, PIN, settings etc.
 
