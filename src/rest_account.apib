@@ -1,8 +1,20 @@
 # Users
 
-## Users
+## Group User
 
 User resource allows to list users, create a new user, update user.
+
+This is an object representing an user account. You can retrieve it to see properties on the account like its current e-mail address, settings etc.
+
+A User object has the following attributes:
+
++ first_name
++ last_name
++ email
++ phone
++ country_code
++ created_at - An ISO8601 date when the user was created.
+
 
 ### POST [/users]
 
@@ -73,23 +85,6 @@ Respone Body
 + Response 422 (application/json)
     + Attributes (Error 422)
 
-
-## Group User
-
-This is an object representing an user account. You can retrieve it to see properties on the account like its current e-mail address, settings etc.
-
-A User object has the following attributes:
-
-+ first_name
-+ last_name
-+ email
-+ phone
-+ country_code
-+ created_at - An ISO8601 date when the user was created.
-
-+ Parameters
-    + id: me (required, string) - ID of the User in form of a string
-    + include: offers,balance (optional, enum) - related resources to include in the response
 
 ### GET /users/{id}{?include}
 
