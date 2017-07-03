@@ -1,12 +1,10 @@
-# Account
+# Users
 
-# Group Users
+## Users
 
 User resource allows to list users, create a new user, update user.
 
-## Users Collection [/users]
-
-### Create a new user [POST]
+### POST [/users]
 
 Creates a new user.
 
@@ -76,7 +74,7 @@ Respone Body
     + Attributes (Error 422)
 
 
-## User [/users/{id}{?include}]
+## Group User
 
 This is an object representing an user account. You can retrieve it to see properties on the account like its current e-mail address, settings etc.
 
@@ -93,7 +91,7 @@ A User object has the following attributes:
     + id: me (required, string) - ID of the User in form of a string
     + include: offers,balance (optional, enum) - related resources to include in the response
 
-### Get a single user by ID [GET]
+### GET /users/{id}{?include}
 
 Example
 
@@ -154,7 +152,8 @@ https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
             X-Application-Key: <your_application_key>
 
 + Parameters
-    + include=businesses,catalog_items (optional)
+    + id: me (required, string) - ID of the User in form of a string
+    + include: businesses,catalog_items (optional, enum) - related resources to include in the response
 
 + Response 200 (application/json)
     + Attributes
@@ -162,7 +161,7 @@ https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
         - included (Account Include Catalog)
 
 
-### Update an user [PATCH]
+### PATCH [/user/{id}]
 
 Allows you to update e-mail address, name, phone number, PIN, settings etc.
 
