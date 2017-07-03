@@ -1,10 +1,14 @@
 # Account
 
-# Group Account
+# Users
 
-### POST /users
+User resource allows to list users, create a new user, update user.
 
-Create a new user.
+## Users Collection [/users]
+
+### Create a new user [POST]
+
+Creates a new user.
 
 *Body parameters*
 |Name|Type|Description|
@@ -71,10 +75,27 @@ Respone Body
 + Response 422 (application/json)
     + Attributes (Error 422)
 
+# Group User
 
-### GET /users/{me}
+A user represents a regular user account
 
-This is an object representing your Kangaroo account. You can retrieve it to see properties on the account like its current e-mail address, settings etc.
+## User [/users/{user_id}{?include}]
+
+This is an object representing an user account. You can retrieve it to see properties on the account like its current e-mail address, settings etc.
+
+A User object has the following attributes:
+
++ first_name
++ last_name
++ email
++ phone
++ country_code
++ created_at - An ISO8601 date when the user was created.
+
++ Parameters
+    + user_id: me (required, string) - ID of the User in form of a string
+
+### Get a single user by ID [GET]
 
 Example
 
@@ -143,7 +164,7 @@ https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
         - included (Account Include Catalog)
 
 
-### PATCH /users/{me}
+### Update an user [PATCH]
 
 Allows you to update e-mail address, name, phone number, PIN, settings etc.
 
