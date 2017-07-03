@@ -24,29 +24,29 @@ Content-Type: application/json
 Response Body
 ```
 {
-    "data": [
-        {
-            "id": "11e72ab54e056acc90ac089e01cf89b5",
-            "name": "Home Heating Company",
-            "loyalty_type": "per_spend",
-            "about": " We specialize in home heating by providing the security and benefit of 24\/7 emergency service",
-            "logo": {
-                "large": "1493234454_5900f316708678.24867196.jpg",
-                "medium": "1493234454_5900f316708678.24867196.jpg",
-                "thumbnail": "493234454_5900f316708678.24867196.jpg"
-            },
-            "cover_photo": {
-                "large": null,
-                "medium": null,
-                "thumbnail": null
-            },
-            "category": {
-                "id": 2,
-                "name": "Services",
-                "code": "FRONTEND_BUS_CAT_SERVICES"
-            }
-        }
-    ]
+  "data": [
+    {
+      "id": "11e72ab54e056acc90ac089e01cf89b5",
+      "name": "Home Heating Company",
+      "loyalty_type": "per_spend",
+      "about": " We specialize in home heating by providing the security and benefit of 24/7 emergency service",
+      "logo": {
+        "large": "1493234454_5900f316708678.24867196.jpg",
+        "medium": "1493234454_5900f316708678.24867196.jpg",
+        "thumbnail": "493234454_5900f316708678.24867196.jpg"
+      },
+      "cover_photo": {
+        "large": null,
+        "medium": null,
+        "thumbnail": null
+      },
+      "category": {
+        "id": 2,
+        "name": "Services",
+        "code": "FRONTEND_BUS_CAT_SERVICES"
+      }
+    }
+  ]
 }
 ```
 
@@ -73,7 +73,7 @@ Path Parameters
 Query Parameters
 |Name|Type|Description|
 |-----|----|-----------|
-|include|array|`Optional.` You can optionally request that the response include the balance object. To do so, specify include[]=balance in your request.|
+|include|enum|`Optional.` You can optionally request that the response include the related objects. To do so, specify for example: include=offers,products in your request.|
 
 
 > **NOTE:** You could also request more information using include parameter. All possible values:
@@ -86,7 +86,7 @@ Query Parameters
 
 Example
 ```
-GET /users/me/businesses/{business_id}?include[]=offers HTTP/1.1
+GET /users/me/businesses/{business_id} HTTP/1.1
 Host: api.kangaroorewards.com
 Authorization: Bearer eyJ0eXAiOiJKV1QiLC
 Accept: application/vnd.kangaroorewards.api.v1+json;
@@ -123,7 +123,7 @@ Response Body
 
 Example with include
 ```
-GET /users/me/businesses/{business_id}?include[]=offers&include[]=catalog_items&include[]=products HTTP/1.1
+GET /users/me/businesses/{business_id}?include=offers,catalog_items,products HTTP/1.1
 Host: api.kangaroorewards.com
 Authorization: Bearer eyJ0eXAiOiJKV1QiLC
 Accept: application/vnd.kangaroorewards.api.v1+json;
@@ -134,56 +134,58 @@ Content-Type: application/json
 Response Body
 ```
 {
-    "data": {
-        "id": "11e72ab54e056acc90ac089e01cf89b5",
-        "name": "Home Heating Company",
-        "loyalty_type": "per_spend",
-        "about": " We specialize in home heating by providing the security and benefit of 24\/7 emergency service",
-        "logo": {
-            "large": "1493234454_5900f316708678.24867196.jpg",
-            "medium": "1493234454_5900f316708678.24867196.jpg",
-            "thumbnail": "493234454_5900f316708678.24867196.jpg"
-        },
-        "cover_photo": {
-            "large": null,
-            "medium": null,
-            "thumbnail": null
-        },
-        "category": {
-            "id": 2,
-            "name": "Services",
-            "code": "FRONTEND_BUS_CAT_SERVICES"
-        },
-        "offers": [
-            {
-                "id": 574,
-                "points": 0,
-                "expires_at": "2017-07-01T03:59:59+0000",
-                "discount_value": 0,
-                "multip_factor": 0,
-                "real_value": 0,
-                "type": "free_product",
-                "title": "Offer for Home heating",
-                "description": "",
-                "images": []
-            }
-        ],
-        "products": [],
-        "catalog_items": [
-            {
-                "id": 579,
-                "points": 100,
-                "expires_at": "2027-04-26T19:21:22+00:00",
-                "amount": 0,
-                "real_value": 0,
-                "partner_reward": false,
-                "type": "redeem_discount_amount",
-                "title": "1$ Discount",
-                "description": "",
-                "images": []
-            }
-        ]
+  "data": {
+    "id": "11e72ab54e056acc90ac089e01cf89b5",
+    "name": "Home Heating Company",
+    "loyalty_type": "per_spend",
+    "about": " We specialize in home heating by providing the security and benefit of 24/7 emergency service",
+    "logo": {
+      "large": "1493234454_5900f316708678.24867196.jpg",
+      "medium": "1493234454_5900f316708678.24867196.jpg",
+      "thumbnail": "493234454_5900f316708678.24867196.jpg"
+    },
+    "cover_photo": {
+      "large": null,
+      "medium": null,
+      "thumbnail": null
+    },
+    "category": {
+      "id": 2,
+      "name": "Services",
+      "code": "FRONTEND_BUS_CAT_SERVICES"
     }
+  },
+  "included": {
+    "offers": [
+      {
+        "id": 574,
+        "points": 0,
+        "expires_at": "2017-07-01T03:59:59+0000",
+        "discount_value": 0,
+        "multip_factor": 0,
+        "real_value": 0,
+        "type": "free_product",
+        "title": "Offer for Home heating",
+        "description": "",
+        "images": []
+      }
+    ],
+    "products": [],
+    "catalog_items": [
+      {
+        "id": 579,
+        "points": 100,
+        "expires_at": "2027-04-26T19:21:22+00:00",
+        "amount": 0,
+        "real_value": 0,
+        "partner_reward": false,
+        "type": "redeem_discount_amount",
+        "title": "1$ Discount",
+        "description": "",
+        "images": []
+      }
+    ]
+  }
 }
 ```
 
