@@ -157,7 +157,7 @@ https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
 
 
 
-### PATCH /users/{id}
+### PATCH users/{id}
 
 Allows you to update e-mail address, name, phone number, PIN, settings etc.
 
@@ -185,6 +185,9 @@ Content-Type: application/json
             Authorization: Bearer <access_token>
             Accept: application/vnd.kangaroorewards.api.v1+json;
             X-Application-Key: <your_application_key>
+
++ Parameters
+    + id: me (required, string) - ID of the User in form of a string
 
 + Response 200 (application/json)
     + Attributes
