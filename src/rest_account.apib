@@ -11,11 +11,13 @@ Create a new user.
 |-----|----|-----------|
 |email|string|Required if no phone number provided|
 |phone|string|Required if no email provided|
-|country_code|string|The customer's country, in ISO 3166-1-alpha-2 format.|
+|country_code|string|The user's country, in ISO 3166-1-alpha-2 format.|
 |first_name|string|First Name|
 |last_name|string|Last Name|
 |language|string|Communication language. Possible values `en` - English, `fr` - French, `es` - Spanish|
 |gender|string|Possible values `male`, `female`|
+|birth_date|Thes user's date of birth|
+|pin_code|Thes user's pin code|
 
 Example
 
@@ -47,6 +49,8 @@ Respone Body
     }
 }
 ```
+> **NOTE:** If no PIN provided in request body then a PIN will be automatically generated.
+> - Currently only PIN is used for authentication. Password is not supported.
 
 + Request (application/json)
 
@@ -92,8 +96,8 @@ Content-Type: application/json
 > - **products** - includes published products in the response
 > - **social_media** - includes social media links in the response
 > - **coalition** - includes coalition object in the response
-> - **user_emails** - includes all user's emails with status in the response
 > - **balance** - includes user balance for business in the response
+> - **user_emails** - includes all user's emails with status in the response
 > - **user_phone_numbers** - includes all user's phone numbers with status in the response
 
 The value of the include parameter MUST be a comma-separated (",") list of relationship names.
@@ -104,6 +108,7 @@ https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
 ```
 
 > **NOTE:** `coalition` parameter is applicable only for a coalition business not for a regular business
+
 > **NOTE:** `businesses` parameter is applicable only for a coalition or conglomerate business not for a regular business
 
 > **NOTE:** When `balance` is included and `X-Application-Key` belongs to a coalition, then each business 

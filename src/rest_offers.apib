@@ -6,6 +6,18 @@
 
 Provides the details for all of a business's offers.
 
+Path Parameters
+|Name|Type|Description|
+|-----|----|-----------|
+|me|string|`Required.` The ID of the user|
+|offer_id|number|`Required.` The ID of the offer|
+
+Query Parameters
+|Name|Type|Description|
+|-----|----|-----------|
+|relationships|enum|`Optional.` You can optionally request that the response include the branch object. To do so, specify relationships=branch in your request.|
+
+
 Example
 
 ```
@@ -20,26 +32,78 @@ Content-Type: application/json
 Response Body
 ```
 {
-    "data": [
+  "data": [
+    {
+      "id": 123,
+      "points": 0,
+      "expires_at": "2017-07-01T03:59:59+0000",
+      "discount_value": 0,
+      "multip_factor": 0,
+      "real_value": 0,
+      "type": "free_product",
+      "title": "Offer Title",
+      "description": "",
+      "images": [
         {
-            "id": 123,
-            "points": 0,
-            "expires_at": "2017-07-01T03:59:59+0000",
-            "discount_value": 0,
-            "multip_factor": 0,
-            "real_value": 0,
-            "type": "free_product",
-            "title": "Offer Title",
-            "description": "",
-            "images": [
-                {
-                    "default": true,
-                    "path": "1498064009_594aa4895e8c7.jpg"
-                }
-            ],
-            "branch_name": "Some Branch Name"
+          "default": true,
+          "path": "1498064009_594aa4895e8c7.jpg"
         }
-    ]
+      ]
+    }
+  ]
+}
+```
+
+> **NOTE:** You could also request more information using relationship parameter. All possible values:
+> - **branch** - includes branch object in the response
+
+The value of the relationships parameter MUST be a comma-separated (",") list of relationship names.
+
+Example
+```
+GET /users/me/offers?relationships=branch HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyXai0XD7SLLzaOeJW
+Content-Type: application/json
+```
+
+Response Body
+```
+{
+  "data": {
+    "id": 123,
+    "points": 0,
+    "expires_at": "2017-07-01T03:59:59+0000",
+    "discount_value": 0,
+    "multip_factor": 0,
+    "real_value": 0,
+    "type": "free_product",
+    "title": "Offer Title",
+    "description": "",
+    "images": [
+      {
+        "default": true,
+        "path": "1498064009_594aa4895e8c7.jpg"
+      }
+    ],
+    "branch": {
+      "id": "11e6a34f8e89eb0e9708089e01cf89b5",
+      "name": "Pizza Nova",
+      "web_site": null,
+      "logo": {
+        "large": null,
+        "medium": null,
+        "thumbnail": null
+      },
+      "cover_photo": {
+        "large": null,
+        "medium": null,
+        "thumbnail": null
+      }
+    }
+  }
 }
 ```
 
@@ -67,12 +131,12 @@ Path Parameters
 Query Parameters
 |Name|Type|Description|
 |-----|----|-----------|
-|include|array|`Optional.` You can optionally request that the response include the balance object. To do so, specify include[]=balance in your request.|
+|relationships|enum|`Optional.` You can optionally request that the response include related objects. To do so, specify for example: relationships=branch in your request.|
 
 
 Example
 ```
-GET /users/me/offers/{offer_id}?include[]=branches HTTP/1.1
+GET /users/me/offers/{offer_id}?relationships=branch HTTP/1.1
 Host: api.kangaroorewards.com
 Authorization: Bearer eyJ0eXAiOiJKV1QiLC
 Accept: application/vnd.kangaroorewards.api.v1+json;
@@ -83,24 +147,38 @@ Content-Type: application/json
 Response Body
 ```
 {
-    "data": {
-        "id": 123,
-        "points": 0,
-        "expires_at": "2017-07-01T03:59:59+0000",
-        "discount_value": 0,
-        "multip_factor": 0,
-        "real_value": 0,
-        "type": "free_product",
-        "title": "Offer Title",
-        "description": "",
-        "images": [
-            {
-                "default": true,
-                "path": "1498064009_594aa4895e8c7.jpg"
-            }
-        ],
-        "branch_name": "Some Branch Name"
+  "data": {
+    "id": 123,
+    "points": 0,
+    "expires_at": "2017-07-01T03:59:59+0000",
+    "discount_value": 0,
+    "multip_factor": 0,
+    "real_value": 0,
+    "type": "free_product",
+    "title": "Offer Title",
+    "description": "",
+    "images": [
+      {
+        "default": true,
+        "path": "1498064009_594aa4895e8c7.jpg"
+      }
+    ],
+    "branch": {
+      "id": "11e6a34f8e89eb0e9708089e01cf89b5",
+      "name": "Pizza Nova",
+      "web_site": null,
+      "logo": {
+        "large": null,
+        "medium": null,
+        "thumbnail": null
+      },
+      "cover_photo": {
+        "large": null,
+        "medium": null,
+        "thumbnail": null
+      }
     }
+  }
 }
 ```
 
