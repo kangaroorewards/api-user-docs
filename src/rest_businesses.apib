@@ -76,14 +76,6 @@ Query Parameters
 |include|enum|`Optional.` You can optionally request that the response include the related objects. To do so, specify for example: include=offers,products in your request.|
 
 
-> **NOTE:** You could also request more information using include parameter. All possible values:
-- **offers** - include business offers in the response
-- **products** - include products in the response
-- **giftcards** - include gift cards in the response
-- **catalog_items** - include Redemption Catalog in the response
-- **social_media** - include social media links in the response
-- **branches** - include business branches in the response
-
 Example
 ```
 GET /users/me/businesses/{business_id} HTTP/1.1
@@ -120,6 +112,14 @@ Response Body
     }
 }
 ```
+
+> **NOTE:** You could also request more information using include parameter. All possible values:
+- **offers** - include business offers in the response
+- **products** - include products in the response
+- **giftcards** - include gift cards in the response
+- **catalog_items** - include Redemption Catalog in the response
+- **social_media** - include social media links in the response
+- **branches** - include business branches in the response
 
 Example with include
 ```

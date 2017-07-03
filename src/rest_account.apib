@@ -143,6 +143,52 @@ https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
         - included (Account Include Catalog)
 
 
+### PATCH /users/{me|user_id}
+
+Allows you to update e-mail address, name, phone number, PIN, settings etc.
+
+Example
+
+```
+PATCH /users/me HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "email": "email1@example.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "pin_code": 1111
+}
+```
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Account)
+
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Account)
+        - included (Account Include Emails)
+
 # Data Structures
 
 ## Account (object)
@@ -205,6 +251,20 @@ https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
         * `about`: `Retrorant has cuisines in houses across the city.` (string)
         * `logo`: `57d23093693fe.jpg` (string)
         * `cover`: `5755ae54d57635.61967004.jpg` (string)
+
+## Account Include Emails (object)
+
++ user_emails (array)
+    + (object)
+        * email: `email1@example.com`
+        * status_code: 33 (number)
+        * status_text: `EMAIL_VERIFIED` (string)
+        * created_at: `2017-06-30T15:45:18+00:00` (string)
+    + (object)
+        * email: `email1@example.com`
+        * status_code: 32 (number)
+        * status_text: `EMAIL_NOT_VERIFIED` (string)
+        * created_at: `2017-06-30T15:43:58+00:00` (string)
 
 ## User (object)
 
