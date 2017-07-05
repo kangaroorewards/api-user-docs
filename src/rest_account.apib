@@ -1,6 +1,6 @@
 # Users 
 
-# Group User Accounts
+# Group Users
 
 User resource allows to list users, create a new user, update user.
 
@@ -19,10 +19,23 @@ A User object has the following attributes:
 - birth_date `(String)` : The user's date of birth.
 - pin_code `(Number)` : The user's pin code.
 
-## User Collection [/users]
+
+## Users [/users{?page}]
+
++ Parameters
+    + page (number, optional)
+
+        The page number.
+
+        + Default: `1`
+
++ Attributes
+    - data (array[User])
 
 ### List all users [GET]
 Retrieve paginated list of users.
+
+> **NOTE:** Currently Not implemented
 
 + Request (application/json)
 
@@ -34,7 +47,7 @@ Retrieve paginated list of users.
 
 + Response 200 (application/json)
     + Attributes
-        - data ([User])
+        - data (array[User])
 
 ### Create a user [POST]
 
@@ -105,6 +118,10 @@ Respone Body
 
 
 ## User [/users/{id}{?include}]
+
++ Parameters
+    + id: me (required, string) - ID of the User in form of a string
+    + include: businesses,catalog_items (optional, enum) - related resources to include in the response
 
 ### Retrieve a user [GET]
 
