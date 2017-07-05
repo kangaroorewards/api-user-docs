@@ -20,7 +20,7 @@ A User object has the following attributes:
 - pin_code `(Number)` : The user's pin code.
 
 
-## User Collection [/users{?page}]
+## User [/users{?page}]
 
 + Parameters
     + page: 2 (number, optional)
@@ -48,6 +48,8 @@ Retrieve paginated list of users.
 + Response 200 (application/json)
     + Attributes
         - data (array[User])
+
+## User [/users]
 
 ### Create a user [POST]
 
@@ -108,7 +110,7 @@ Respone Body
 
 + Response 200 (application/json)
     + Attributes
-        - data (User)
+        - data (User Account)
 
 + Response 400 (application/json)
     + Attributes (Error 400)
@@ -321,7 +323,7 @@ Content-Type: application/json
         * status_text: `EMAIL_NOT_VERIFIED` (string)
         * created_at: `2017-06-30T15:43:58+00:00` (string)
 
-## User (object)
+## User Account (object)
 
 + id: `11e696103f8ff5eabb02089e01cf89b5` (string)
 + first_name: `Battery` (string) - User's first name.
