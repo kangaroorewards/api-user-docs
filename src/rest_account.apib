@@ -1,6 +1,6 @@
-# Users
+# Users 
 
-## Group Users
+# Group User Accounts
 
 User resource allows to list users, create a new user, update user.
 
@@ -8,17 +8,35 @@ This is an object representing an user account. You can retrieve it to see prope
 
 A User object has the following attributes:
 
-+ first_name
-+ last_name
-+ email
-+ phone
-+ country_code
-+ created_at - An ISO8601 date when the user was created.
+- id `(String)` : Unique identifier. 
+- first_name `(String)` : First Name.
+- last_name `(String)` : Last Name.
+- email `(String)` : Email address of the user.
+- phone `(String)` : Phone number of the user.
+- country_code `(String)` : The user's phone number country, in ISO 3166-1-alpha-2 format.
+- language `(String)` : Communication language. Possible values `en` - English, `fr` - French, `es` - Spanish.
+- gender `(String)` : Possible values `male`, `female`.
+- birth_date `(String)` : The user's date of birth.
+- pin_code `(Number)` : The user's pin code.
 
+## User Collection [/users]
 
-### POST /users
+### List all users [GET]
+Retrieve paginated list of users.
 
-Creates a new user.
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <access_token>
+            X-Application-Key: <your_application_key>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+
++ Response 200 (application/json)
+    + Attributes
+        - data ([User])
+
+### Create a user [POST]
 
 *Body parameters*
 |Name|Type|Description|
@@ -30,8 +48,8 @@ Creates a new user.
 |last_name|string|Last Name|
 |language|string|Communication language. Possible values `en` - English, `fr` - French, `es` - Spanish|
 |gender|string|Possible values `male`, `female`|
-|birth_date|Thes user's date of birth|
-|pin_code|Thes user's pin code|
+|birth_date|The user's date of birth|
+|pin_code|The user's pin code|
 
 Example
 
@@ -86,7 +104,9 @@ Respone Body
     + Attributes (Error 422)
 
 
-### GET /users/{id}{?include}
+## User [/users/{id}{?include}]
+
+### Retrieve a user [GET]
 
 Example
 
@@ -157,7 +177,7 @@ https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
 
 
 
-### PATCH /users/{id}
+### Update a user [PATCH]
 
 Allows you to update e-mail address, name, phone number, PIN, settings etc.
 
