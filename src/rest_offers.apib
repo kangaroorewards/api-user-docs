@@ -2,7 +2,12 @@
 
 # Group Offers
 
-### GET /users/me/offers
+## Offer [/users/{user_id}/offers]
+
++ Parameters
+    + user_id: me (required, string) - ID of the User
+
+### List all offers [GET]
 
 Provides the details for all of a business's offers.
 
@@ -117,7 +122,13 @@ Response Body
     + Attributes
         - data (Offers Base)
 
-### GET /users/me/offers/{offer_id}
+## Offer [/users/{user_id}/offers/{offer_id}]
+
++ Parameters
+    + user_id: me (required, string) - ID of the User
+    + offer_id: me (required, number) - ID of the Offer
+
+### Retrieve an offer [GET]
 
 Returns a single offer.
 

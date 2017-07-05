@@ -2,7 +2,12 @@
 
 # Group Businesses
 
-### GET /users/me/businesses
+## Business [/users/{user_id}/businesses]
+
++ Parameters
+    + user_id: me (required, string) - ID of the User
+
+### List all businesses [GET]
 
 Provides the list of businesses.
 
@@ -61,7 +66,13 @@ Response Body
     + Attributes
         - data (Businesses List)
 
-### GET /users/me/businesses/{business_id}
+## Business [/users/{user_id}/businesses/{business_id}]
+
++ Parameters
+    + user_id: me (required, string) - ID of the User
+    + business_id: 11e696103f8ff5eabb02089e01cf89b5 (required, string) - ID of the business
+
+### Retrieve a business[GET]
 
 Returns a single business.
 
