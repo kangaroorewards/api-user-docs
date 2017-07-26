@@ -449,7 +449,7 @@ Content-Type: application/json
 Example with token
 
 ```
-POST /users/credentials/verification HTTP/1.1
+POST /users/pincode/reset HTTP/1.1
 Host: api.kangaroorewards.com
 Accept: application/vnd.kangaroorewards.api.v1+json;
 X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
@@ -464,7 +464,7 @@ Content-Type: application/json
 Example with email and verification code
 
 ```
-POST /users/credentials/verification HTTP/1.1
+POST /users/pincode/reset HTTP/1.1
 Host: api.kangaroorewards.com
 Accept: application/vnd.kangaroorewards.api.v1+json;
 X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
@@ -485,6 +485,9 @@ Content-Type: application/json
             Content-Type: application/json
 
 + Response 204 (application/json)
+
++ Response 422 (application/json)
+    + Attributes (Error 422 Verification)
 
 
 
@@ -612,3 +615,11 @@ Content-Type: application/json
 + status_code: 202 (number)
 + message: Accepted (string)
 + description: `You will receive an email with a link to reset your PIN.` (string)
+
+
+## Error 422 Verification (object)
+
++ verification_code (array)
+    + `The selected verification code is invalid.` (string)
++ token (array)
+    + `The selected token is invalid.` (string)
