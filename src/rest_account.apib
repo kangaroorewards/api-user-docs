@@ -219,6 +219,23 @@ Content-Type: application/json
 }
 ```
 
+Example Update Profile Image
+```
+PATCH /users/me HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "profile_photo": "photos/user/67062_1500901818_5975f1ba4ad682.41305736.jpg",
+}
+```
+
+> **NOTE:** First upload the image by making a POST request to `/users/me/images` and send the image path 
+> when updating user profile to save the image path for authenticated user.
+
 + Request
     + Headers
     
@@ -245,6 +262,213 @@ Content-Type: application/json
     + Attributes
         - data (Account)
         - included (Account Include Emails)
+
+
+## User [/users/{id}/images]
+
+### Upload profile image [POST]
+
+Allows you to upload user profile image
+
+Example
+
+```
+POST /users/me/images HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="image.jpg"
+Content-Type: image/jpeg
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+```
+
+Example HTML
+```html
+<form action="https://api.kangaroorewards.com/users/me/images" enctype="multipart/form-data" method="POST">
+    <input type="file" name="image" />
+    <button type="submit"> Upload </button>
+</form>
+```
+
+> **Note:** For this endpoint the `Content-Type` header must be `multipart/form-data` 
+> and the field name that contains the file is `image`
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+            Content-Type: multipart/form-data
+
++ Parameters
+    + id: me (required, string) - ID of the User in form of a string
+
++ Response 200 (application/json)
+    + Attributes
+        - data (UserImage)
+
+
+## User [/users/credentials/verification]
+
+### Verify user credentials [POST]
+
+Allows you to verify user's email or phone number using the token received in the welcome email or text message
+
+> **Note:** The `Authorization` header is not required, only `X-Application-Key` header is required
+
+Example
+
+```
+POST /users/credentials/verification HTTP/1.1
+Host: api.kangaroorewards.com
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "token": "<verification-token>",
+}
+```
+
++ Request
+    + Headers
+    
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+            Content-Type: application/json
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Account)
+
+
+## User [/users/pincode/reset-request]
+
+### Reset PIN request [POST]
+
+An email or text message will be sent to included email/phone number with a token or verification code.
+
+> **Note:** The `Authorization` header is not required, only `X-Application-Key` header is required
+
+*Body parameters*
+|Name|Type|Description|
+|-----|----|-----------|
+|mode|string|Required. `token` or `verification_code`|
+|email|string|Required if no phone nuber provided|
+|phone|string|Required if no email provided|
+|country_code|string|Required with phone number. The user's country, in ISO 3166-1-alpha-2 format.|
+
+Example mode `token` and email
+
+```
+POST /users/pincode/reset-request HTTP/1.1
+Host: api.kangaroorewards.com
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "email": "john@example.com",
+    "mode": "token"
+}
+```
+An email will be sent with link and token. The user should click the link to reset his/her PIN code.
+
+Example mode `verification code` and `phone number`
+
+```
+POST /users/pincode/reset-request HTTP/1.1
+Host: api.kangaroorewards.com
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "phone": "514-111-1111",
+    "country_code": "CA",
+    "mode": "verification_code"
+}
+```
+A text message will be sent with a verification code. The user should use it to reset his/her PIN code.
+
++ Request
+    + Headers
+    
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+            Content-Type: application/json
+
++ Response 202 (application/json)
+    + Attributes (ResetRequestAccepted)
+
+
+## User [/users/pincode/reset]
+
+### Reset PIN [POST]
+
+Allows to reset a user's PIN code. The token or verification code and user credentials is required.
+
+> **Note:** The `Authorization` header is not required, only `X-Application-Key` header is required
+
+> **Note:** When token provided, the user credentials are not required.
+> User's email or phone number is required only when verification code provided
+
+*Body parameters*
+|Name|Type|Description|
+|-----|----|-----------|
+|mode|string|Required. `token` or `verification_code`|
+|email|string|Required if no phone nuber provided|
+|phone|string|Required if no email provided|
+|country_code|string|Required with phone number. The user's country, in ISO 3166-1-alpha-2 format.|
+
+Example with verification code and phone number.
+
+```
+POST /users/pincode/reset HTTP/1.1
+Host: api.kangaroorewards.com
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "verification_code": 1617,
+    "phone": 514-111-1111,
+    "country_code": "CA",
+    "pin_code": 1111
+}
+```
+
+Example with token
+
+```
+POST /users/credentials/verification HTTP/1.1
+Host: api.kangaroorewards.com
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "token": "1501011980.5478MTF7djiC7ZbgTqG1VsKycmQkVvpEN18QcyaBh3RSqAniZ",
+    "pin_code": 1111
+}
+```
+
++ Request
+    + Headers
+    
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+            Content-Type: application/json
+
++ Response 204 (application/json)
+
+
 
 # Data Structures
 
@@ -342,6 +566,10 @@ Content-Type: application/json
 + language: `en` (string) - Communication language. Possible values `en` - English, `fr` - French, `es` - Spanish
 + gender: `male` (string) - User's gender. Can be male or female
 
+## UserImage (object)
+
++ path: `photos\/user\/312270_1500856944_5975427069ad22.18650642.jpg`
+
 ## Error 400 (object)
 
 + code: `400` (number)
@@ -360,3 +588,9 @@ Content-Type: application/json
     + `The email field is required` (string)
 + phone (array)
     + `The phone field is required` (string)
+
+## ResetRequestAccepted (object)
+
++ status_code: 202 (number)
++ message: Accepted (string)
++ description: `You will receive an email with a link to reset your PIN.` (string)
