@@ -422,9 +422,11 @@ Allows to reset a user's PIN code. The token or verification code and user crede
 *Body parameters*
 |Name|Type|Description|
 |-----|----|-----------|
-|mode|string|Required. `token` or `verification_code`|
-|email|string|Required if no phone nuber provided|
-|phone|string|Required if no email provided|
+|token|string|Required if no verification_code provided|
+|verification_code|number|Required if no token provided|
+|pin_code|number|Required. The new PIN code|
+|email|string|Required if no phone nuber provided and verification_code included|
+|phone|string|Required if no email provided and verification_code included|
 |country_code|string|Required with phone number. The user's country, in ISO 3166-1-alpha-2 format.|
 
 Example with verification code and phone number.
@@ -455,6 +457,22 @@ Content-Type: application/json
 
 {
     "token": "1501011980.5478MTF7djiC7ZbgTqG1VsKycmQkVvpEN18QcyaBh3RSqAniZ",
+    "pin_code": 1111
+}
+```
+
+Example with email and verification code
+
+```
+POST /users/credentials/verification HTTP/1.1
+Host: api.kangaroorewards.com
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "verification_code": 9993,
+    "email": "john@example.com",
     "pin_code": 1111
 }
 ```
