@@ -322,7 +322,7 @@ Allows you to verify user's email or phone number using the token received in th
 
 > **Note:** The `Authorization` header is not required, only `X-Application-Key` header is required
 
-Example
+Example. Verify user's email address.
 
 ```
 POST /users/credentials/verification HTTP/1.1
@@ -333,6 +333,23 @@ Content-Type: application/json
 
 {
     "token": "<verification-token>",
+    "email": "john@example.com"
+}
+```
+
+Example. Verify user's phone number'.
+
+```
+POST /users/credentials/verification HTTP/1.1
+Host: api.kangaroorewards.com
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "token": "<verification-token>",
+    "phone": "514-111-1111",
+    "country_code": "CA"
 }
 ```
 
@@ -364,7 +381,7 @@ An email or text message will be sent to included email/phone number with a toke
 |phone|string|Required if no email provided|
 |country_code|string|Required with phone number. The user's country, in ISO 3166-1-alpha-2 format.|
 
-Example mode `token` and email
+Example. Reset PIN request with mode token and email
 
 ```
 POST /users/pincode/reset-request HTTP/1.1
@@ -380,7 +397,7 @@ Content-Type: application/json
 ```
 An email will be sent with link and token. The user should click the link to reset his/her PIN code.
 
-Example mode `verification code` and `phone number`
+Example. Reset PIN request with mode verification code and phone number
 
 ```
 POST /users/pincode/reset-request HTTP/1.1
@@ -429,7 +446,7 @@ Allows to reset a user's PIN code. The token or verification code and user crede
 |phone|string|Required if no email provided and verification_code included|
 |country_code|string|Required with phone number. The user's country, in ISO 3166-1-alpha-2 format.|
 
-Example with verification code and phone number.
+Example. Reset PIN using verification code and phone number.
 
 ```
 POST /users/pincode/reset HTTP/1.1
@@ -446,7 +463,7 @@ Content-Type: application/json
 }
 ```
 
-Example with token
+Example. Reset PIN using a token
 
 ```
 POST /users/pincode/reset HTTP/1.1
@@ -461,7 +478,7 @@ Content-Type: application/json
 }
 ```
 
-Example with email and verification code
+Example. Reset PIN using verification code and email
 
 ```
 POST /users/pincode/reset HTTP/1.1
