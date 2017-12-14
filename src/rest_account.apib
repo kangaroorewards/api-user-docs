@@ -1,4 +1,4 @@
-# Users 
+# Users
 
 # Group Users
 
@@ -8,7 +8,7 @@ This is an object representing an user account. You can retrieve it to see prope
 
 A User object has the following attributes:
 
-- id `(String)` : Unique identifier. 
+- id `(String)` : Unique identifier.
 - first_name `(String)` : First Name.
 - last_name `(String)` : Last Name.
 - email `(String)` : Email address of the user.
@@ -102,7 +102,7 @@ Respone Body
 + Request (application/json)
 
     + Headers
-    
+
             X-Application-Key: <your_application_key>
             Accept: application/vnd.kangaroorewards.api.v1+json;
 
@@ -143,6 +143,7 @@ Content-Type: application/json
 > - **branches** - includes branches for business in the response
 > - **catalog_items** - includes catalog items in the response
 > - **offers** - includes published offers in the response
+> - **coupons** - includes coupons for user in the response
 > - **giftcards** - includes active gift cards in the response
 > - **products** - includes published products in the response
 > - **social_media** - includes social media links in the response
@@ -162,13 +163,13 @@ https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
 
 > **NOTE:** `businesses` parameter is applicable only for a coalition or conglomerate business not for a regular business
 
-> **NOTE:** When `balance` is included and `X-Application-Key` belongs to a coalition, then each business 
+> **NOTE:** When `balance` is included and `X-Application-Key` belongs to a coalition, then each business
 > will have a `balance` object that represents the authenticated user's `balance` for the respective businesses.
 > Also, the response includes the balance object that represents cumulative balance for all the businesses under the coalition
 
 + Request
     + Headers
-    
+
             Authorization: Bearer <access_token>
             Accept: application/vnd.kangaroorewards.api.v1+json;
             X-Application-Key: <your_application_key>
@@ -180,7 +181,7 @@ https://api.kangaroorewards.com/users/me?include=businesses,catalog_items
 
 + Request
     + Headers
-    
+
             Authorization: Bearer <access_token>
             Accept: application/vnd.kangaroorewards.api.v1+json;
             X-Application-Key: <your_application_key>
@@ -233,12 +234,12 @@ Content-Type: application/json
 }
 ```
 
-> **NOTE:** First upload the image by making a POST request to `/users/me/images` and send the image path 
+> **NOTE:** First upload the image by making a POST request to `/users/me/images` and send the image path
 > when updating user profile to save the image path for authenticated user.
 
 + Request
     + Headers
-    
+
             Authorization: Bearer <access_token>
             Accept: application/vnd.kangaroorewards.api.v1+json;
             X-Application-Key: <your_application_key>
@@ -253,7 +254,7 @@ Content-Type: application/json
 
 + Request
     + Headers
-    
+
             Authorization: Bearer <access_token>
             Accept: application/vnd.kangaroorewards.api.v1+json;
             X-Application-Key: <your_application_key>
@@ -295,12 +296,12 @@ Example HTML
 </form>
 ```
 
-> **Note:** For this endpoint the `Content-Type` header must be `multipart/form-data` 
+> **Note:** For this endpoint the `Content-Type` header must be `multipart/form-data`
 > and the field name that contains the file is `image`
 
 + Request
     + Headers
-    
+
             Authorization: Bearer <access_token>
             Accept: application/vnd.kangaroorewards.api.v1+json;
             X-Application-Key: <your_application_key>
@@ -355,7 +356,7 @@ Content-Type: application/json
 
 + Request
     + Headers
-    
+
             Accept: application/vnd.kangaroorewards.api.v1+json;
             X-Application-Key: <your_application_key>
             Content-Type: application/json
@@ -416,7 +417,7 @@ A text message will be sent with a verification code. The user should use it to 
 
 + Request
     + Headers
-    
+
             Accept: application/vnd.kangaroorewards.api.v1+json;
             X-Application-Key: <your_application_key>
             Content-Type: application/json
@@ -496,7 +497,7 @@ Content-Type: application/json
 
 + Request
     + Headers
-    
+
             Accept: application/vnd.kangaroorewards.api.v1+json;
             X-Application-Key: <your_application_key>
             Content-Type: application/json
