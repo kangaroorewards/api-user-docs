@@ -1,0 +1,128 @@
+# Payments
+
+# Group Payments
+
+## Payment [/users/{user_id}/payments]
+
++ Parameters
+    + user_id: me (required, string) - ID of the User
+
+
+### Create a payment [POST]
+
+*Body parameters*
+|Name|Type|Description|
+|-----|----|-----------|
+|intent|string|Required. Must be `buy_giftcard`|
+|provider|string|Required. Must be `paypal`|
+|giftcard_id|number|Required. The gift card ID the payment will be created for|
+|paypal_return_url|string|Required. The return url after payment is completed|
+|paypal_cancel_url|string|Required. The return url for canceling a payment|
+
+Example
+
+```
+POST /users/me/payments HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "intent": "buy_giftcard",
+    "provider": "paypal",
+    "giftcard_id": 1192,
+    "paypal_return_url": "https://example.com/payment/paypal?success=true",
+    "paypal_cancel_url": "https://example.com/payment/paypal?success=false"
+}
+```
+
+Respone Body
+```
+{
+    "data": {
+        "id": "PAY-13T29792VT6854806LJVZSYY",
+        "provider": "paypal",
+        "status": "created",
+        "approval_url": "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-4863717343954603X",
+        "giftcard": {
+            "id": 1192,
+            "title": "50$ Gift Card",
+            "price": 50,
+            "currency": "$",
+            "quantity": 1
+        }
+    }
+}
+```
+> **NOTE:** Currently only PayPal provider is supported to handle payments.
+
+Once the payment is created the user must be redirected to `approval_url`
+
++ Request (application/json)
+
+    + Headers
+
+            X-Application-Key: <your_application_key>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+
+    + Attributes (PaymentBase)
+
++ Response 200 (application/json)
+    + Attributes
+        - data (PaymentResponse)
+
++ Response 400 (application/json)
+    + Attributes (Payment Error 400)
+
++ Response 404 (application/json)
+    + Attributes (Payment Error 404)
+
++ Response 422 (application/json)
+    + Attributes (Payment Error 422)
+
+
+# Data Structures
+
+## PaymentBase (object)
+
+- intent: `buy_giftcard` (string)
+- provider: `paypal` (string)
+- giftcard_id: `1234` (number)
+- paypal_return_url: `https://example.com/payment/paypal?success=true` (string)
+- paypal_cancel_url: `https://example.com/payment/paypal?success=false` (string)
+
+## PaymentResponse (object)
+
+- id: `PAY-13T29792VT6854806LJVZSYY` (string)
+- provider: `paypal` (string)
+- status: `created` (string)
+- approval_url: `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-4863717343954603X` (string)
+- giftcard (object)
+  + id: 1234 (number)
+  + title: `50$ Gift Card` (string)
+  + price: `50` (number)
+  + currency: `$` (string)
+  + quantity: `1` (number)
+
+
+## Payment Error 400 (object)
+
++ code: `400` (number)
++ error: `Bad Request` (string)
++ message: `Invalid ID supplied` (string)
+
+## Payment Error 422 (object)
+
++ giftcard_id (array)
+    + `The giftcard_id field is required` (string)
++ intent (array)
+    + `The intent field is required` (string)
+
+## Payment Error 404 (object)
+
++ error (object)
+    - status_code: 404 (number)
+    - message: `Gift Card 112 Not Found` (string)
+    - description: `The requested resource doesn't exist.` (string)

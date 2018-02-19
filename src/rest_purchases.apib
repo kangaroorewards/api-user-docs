@@ -1,0 +1,138 @@
+# Purchases
+
+# Group Purchases
+
+## Purchase [/users/{user_id}/purchases]
+
++ Parameters
+    + user_id: me (required, string) - ID of the User
+
+
+### Create a purchase [POST]
+
+*Body parameters*
+|Name|Type|Description|
+|-----|----|-----------|
+|intent|string|Required. Must be `buy_giftcard`|
+|provider|string|Required. Must be `paypal`|
+|giftcard_id|number|Required. The gift card ID the purchase will be created for|
+|paypal_return_url|string|Required. The return url after purchase is completed|
+|paypal_cancel_url|string|Required. The return url for canceling a purchase|
+
+Example
+
+```
+POST /users/me/purchases HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyCrhTxfOphmbdWSkonGADcgrsCDa
+Content-Type: application/json
+
+{
+    "intent": "buy_giftcard",
+    "provider": "paypal",
+    "giftcard_id": 1192,
+    "paypal_payment": {
+      "success" : true,
+      "payment_id": "PAY-3AP80704W8500213CLJVBDWY",
+      "payer_id": "U72GC72EJ9DYS",
+      "token": "EC-6P663797EV1432456"
+    }
+}
+```
+
+Respone Body
+```
+{
+  "data": {
+    "id": "PAY-3AP80704W8500213CLJVBDWY",
+    "provider": "paypal",
+    "status": "paid",
+    "giftcard": {
+      "id": 1192,
+      "name": "50$ Gift Card",
+      "price": 50,
+      "currency": "$",
+      "quantity": 1
+    },
+    "balance": {
+      "points": 1000,
+      "giftcard": 50
+    }
+  }
+}
+```
+> **NOTE:** A create purchase request must be sent only after the payment finished.
+
++ Request (application/json)
+
+    + Headers
+
+            X-Application-Key: <your_application_key>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+
+    + Attributes (PurchaseBase)
+
++ Response 200 (application/json)
+    + Attributes
+        - data (PurchaseResponse)
+
++ Response 400 (application/json)
+    + Attributes (Purchase Error 400)
+
++ Response 404 (application/json)
+    + Attributes (Purchase Error 404)
+
++ Response 422 (application/json)
+    + Attributes (Purchase Error 422)
+
+
+# Data Structures
+
+## PurchaseBase (object)
+
+- intent: `buy_giftcard` (string)
+- provider: `paypal` (string)
+- giftcard_id: `1234` (number)
+- paypal_payment (object)
+  + success: true (boolean)
+  + payment_id: `PAY-3AP80704W8500213CLJVBDWY` (string)
+  + payer_id: `U72GC72EJ9DYS` (string)
+  + token: `EC-6P663797EV1432456` (string)
+
+## PurchaseResponse (object)
+
+- id: `PAY-13T29792VT6854806LJVZSYY` (string)
+- provider: `paypal` (string)
+- status: `paid` (string)
+- giftcard (object)
+  + id: 1234 (number)
+  + title: `50$ Gift Card` (string)
+  + price: `50` (number)
+  + currency: `$` (string)
+  + quantity: `1` (number)
+- balance (object)
+  + points 1000 (number)
+  + giftcard 50 (number)
+
+
+## Purchase Error 400 (object)
+
++ code: `400` (number)
++ error: `Bad Request` (string)
++ message: `Invalid ID supplied` (string)
+
+## Purchase Error 422 (object)
+
++ giftcard_id (array)
+    + `The giftcard_id field is required` (string)
++ intent (array)
+    + `The intent field is required` (string)
+
+## Purchase Error 404 (object)
+
++ error (object)
+    - status_code: 404 (number)
+    - message: `Gift Card 112 Not Found` (string)
+    - description: `The requested resource doesn't exist.` (string)

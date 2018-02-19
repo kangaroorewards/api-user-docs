@@ -1,0 +1,254 @@
+# Gift Cards
+
+# Group Gift Cards
+
+## Giftcard [/users/{user_id}/giftcards]
+
++ Parameters
+    + user_id: me (required, string) - ID of the User
+
+### List all giftcards [GET]
+
+Provides the details for all of a business's giftcards.
+
+Path Parameters
+|Name|Type|Description|
+|-----|----|-----------|
+|user_id|string|`Required.` The ID of the user or `me` - currently auhenticated user|
+
+Query Parameters
+|Name|Type|Description|
+|-----|----|-----------|
+|relationships|enum|`Optional.` You can optionally request that the response include the branch object. To do so, specify relationships=branch in your request.|
+
+
+Example
+
+```
+GET /users/me/giftcards HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyXai0XD7SLLzaOeJW
+Content-Type: application/json
+```
+
+Response Body
+```
+{
+  "data": [
+    {
+      "id": 123,
+      "points": 0,
+      "expires_at": "2017-07-01T03:59:59+0000",
+      "discount_value": 0,
+      "multip_factor": 0,
+      "real_value": 0,
+      "type": "giftcard",
+      "title": "Giftcard Title",
+      "description": "",
+      "images": [
+        {
+          "default": true,
+          "path": "1498064009_594aa4895e8c7.jpg"
+        }
+      ]
+    }
+  ]
+}
+```
+
+> **NOTE:** You could also request more information using relationship parameter. All possible values:
+> - **branch** - includes branch object in the response
+
+The value of the relationships parameter MUST be a comma-separated (",") list of relationship names.
+
+Example
+```
+GET /users/me/giftcards?relationships=branch HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyXai0XD7SLLzaOeJW
+Content-Type: application/json
+```
+
+Response Body
+```
+{
+  "data": {
+    "id": 123,
+    "points": 0,
+    "expires_at": "2017-07-01T03:59:59+0000",
+    "discount_value": 0,
+    "multip_factor": 0,
+    "real_value": 0,
+    "type": "giftcard",
+    "title": "Giftcard Title",
+    "description": "",
+    "images": [
+      {
+        "default": true,
+        "path": "1498064009_594aa4895e8c7.jpg"
+      }
+    ],
+    "branch": {
+      "id": "11e6a34f8e89eb0e9708089e01cf89b5",
+      "name": "Pizza Nova",
+      "web_site": null,
+      "logo": {
+        "large": null,
+        "medium": null,
+        "thumbnail": null
+      },
+      "cover_photo": {
+        "large": null,
+        "medium": null,
+        "thumbnail": null
+      }
+    }
+  }
+}
+```
+
++ Request
+    + Headers
+
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Giftcards Base)
+
+## Giftcard [/users/{user_id}/giftcards/{giftcard_id}]
+
++ Parameters
+    + user_id: me (required, string) - ID of the User
+    + giftcard_id: me (required, number) - ID of the Giftcard
+
+### Retrieve an giftcard [GET]
+
+Returns a single giftcard.
+
+Path Parameters
+|Name|Type|Description|
+|-----|----|-----------|
+|me|string|`Required.` The ID of the user or `me` - auhenticated user|
+|giftcard_id|number|`Required.` The ID of the giftcard|
+
+Query Parameters
+|Name|Type|Description|
+|-----|----|-----------|
+|relationships|enum|`Optional.` You can optionally request that the response include related objects. To do so, specify for example: relationships=branch in your request.|
+
+
+Example
+```
+GET /users/me/giftcards/{giftcard_id}?relationships=branch HTTP/1.1
+Host: api.kangaroorewards.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLC
+Accept: application/vnd.kangaroorewards.api.v1+json;
+X-Application-Key: eyXai0XD7SLLzaOeJW
+Content-Type: application/json
+```
+
+Response Body
+```
+{
+  "data": {
+    "id": 123,
+    "points": 0,
+    "expires_at": "2017-07-01T03:59:59+0000",
+    "discount_value": 0,
+    "multip_factor": 0,
+    "real_value": 0,
+    "type": "giftcard",
+    "title": "Giftcard Title",
+    "description": "",
+    "images": [
+      {
+        "default": true,
+        "path": "1498064009_594aa4895e8c7.jpg"
+      }
+    ],
+    "branch": {
+      "id": "11e6a34f8e89eb0e9708089e01cf89b5",
+      "name": "Pizza Nova",
+      "web_site": null,
+      "logo": {
+        "large": null,
+        "medium": null,
+        "thumbnail": null
+      },
+      "cover_photo": {
+        "large": null,
+        "medium": null,
+        "thumbnail": null
+      }
+    }
+  }
+}
+```
+
++ Parameters
+    + giftcard_id: `123` - The unique ID of the giftcard.
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer <access_token>
+            Accept: application/vnd.kangaroorewards.api.v1+json;
+            X-Application-Key: <your_application_key>
+
++ Response 200 (application/json)
+    + Attributes
+        - data (Giftcard Base)
+
++ Response 404 (application/json)
+    + Attributes (Giftcard Error 404)
+
+
+# Data Structures
+
+## Giftcards Base (array)
+
++ (object)
+    * id: 111
+    * title: `Giftcard Title 1` (string)
+    * points: 2000
+    * type: `giftcard` (string)
+    * description: `Some Giftcard Description` (string)
+    * expires_at: `2027-06-27T02:59:59+00:00` (string)
+    * discount_value: 20 (number)
+    * real_value: 20 (number)
++ (object)
+    * id: 112
+    * title: `Giftcard Title 2` (string)
+    * points: 50000
+    * type: `giftcard` (string)
+    * description: `Some Giftcard Description` (string)
+    * expires_at: `2027-04-27T02:59:59+00:00` (string)
+    * discount_value: 50 (number)
+    * real_value:50 (number)
+
+## Giftcard Base (object)
+
+- id: 111
+- title: `Giftcard Title` (string)
+- points: 5000
+- type: `giftcard` (string)
+- description: `Some Giftcard Description` (string)
+- expires_at: `2027-06-27T02:59:59+00:00` (string)
+- discount_value: 50 (number)
+- real_value: 50 (number)
+
+
+## Giftcard Error 404 (object)
+
++ error (object)
+    - status_code: 404 (number)
+    - message: `Giftcard 112 Not Found` (string)
+    - description: `The requested resource doesn't exist.` (string)
+
