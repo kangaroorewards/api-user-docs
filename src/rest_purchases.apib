@@ -16,8 +16,10 @@
 |intent|string|Required. Must be `buy_giftcard`|
 |provider|string|Required. Must be `paypal`|
 |giftcard_id|number|Required. The gift card ID the purchase will be created for|
-|paypal_return_url|string|Required. The return url after purchase is completed|
-|paypal_cancel_url|string|Required. The return url for canceling a purchase|
+|paypal_payment|object|Required. The payment info|
+|paypal_payment.success|boolean|Required. The status for payment|
+|paypal_payment.payment_id|string|Required. The payment ID|
+|paypal_payment.token|string|Required. The payment token|
 
 Example
 
