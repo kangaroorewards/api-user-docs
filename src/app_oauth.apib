@@ -79,66 +79,19 @@ Once you have created an application with type `password grant`, you may request
 the /oauth/token route with the user's email address and pin code. If the request is successful, you will receive an access_token
 and refresh_token in the JSON response from the server.
 
-<table class="table">
-    <tr class="bg-primary">
-        <th>Parameter</th> <th>Values</th> <th>Description</th>
-    </tr>
-    <tr>
-        <td><strong>client_id</strong></td>
-        <td>The client ID you obtain from the <a href="/developers">Developer Portal</a> when you registered your app</td>
-        <td>
-            Identifies the client that is making the request.
-            The value passed in this parameter must exactly match the value shown in the <a href="/developers">Developer Portal</a>
-        </td>
-    </tr>
-    <tr>
-        <td><strong>client_secret</strong></td>
-        <td>The client secret you obtain from the <a href="/developers">Developer Portal</a> when you registered your app</td>
-        <td>
-            Identifies the client that is making the request.
-            The value passed in this parameter must exactly match the value shown in the <a href="/developers">Developer Portal</a>
-        </td>
-    </tr>
-    <tr>
-        <td><strong>grant_type</strong></td>
-        <td><strong>password</strong></td>
-        <td>
-            For password grant
-        </td>
-    </tr>
-    <tr>
-        <td><strong>username</strong></td>
-        <td>Email or phone number</td>
-        <td>
-           The email or phone number
-        </td>
-    </tr>
-    <tr>
-        <td><strong>password</strong></td>
-        <td>The pin code</td>
-        <td>
-           The user's pin code
-        </td>
-    </tr>
-    <tr>
-        <td><strong>scope</strong></td>
-        <td>`user`</td>
-        <td>
-            Scopes allow the clients to request a specific set of permissions when requesting authorization to access an account
-        </td>
-    </tr>
-    <tr>
-        <td><strong>application_key</strong></td>
-        <td>The Application Key</td>
-        <td>
-            The business owner has to provide The Application Key. He can get it from his business portal.
-        </td>
-    </tr>
-</table>
+|Parameter|Values|Description|
+|-----|-----|-----------|
+|**client_id**|The client ID you obtain from the <a href="/developers">Developer Portal</a> when you registered your app|Identifies the client that is making the request. The value passed in this parameter must exactly match the value shown in the <a href="/developers">Developer Portal</a>|
+|**client_secret**|The client secret you obtain from the <a href="/developers">Developer Portal</a> when you registered your app|Identifies the client that is making the request. The value passed in this parameter must exactly match the value shown in the <a href="/developers">Developer Portal</a>|
+|**grant_type**|**password**|For password grant|
+|**username**|john@example.com or 2201234567|The email or phone number|
+|**password**|1111|The pin code|
+|**scope**|`user`|Scopes allow the clients to request a specific set of permissions when requesting authorization to access an account|
+|**application_key**|The Application Key|The business owner has to provide The Application Key. He can get it from his business portal.|
 
 Example Token Request
 
-```
+```php
 $http = new GuzzleHttp\Client;
 
 $response = $http->post('https://api.kangaroorewards.com/oauth/token', [
@@ -194,7 +147,7 @@ https://api.kangaroorewards.com/oauth/token
 |Parameter|Values|Description|
 |-----|-----|-----------|
 |**grant_type**|`refresh_token`|Must be set to "refresh_token" for an token refresh request.|
-|**refresh_token**|`def502009d9337d94c8b7d67b05b9d05afb1b6...`|The **refresh_token** that was received with the original access token.|
+|**refresh_token**|`def502009d905afb1b6...`|The **refresh_token** that was received with the original access token.|
 |**client_id**|Your client ID|The value passed in this parameter must exactly match the value shown in the <a href="/developers">Developer Portal</a>|
 |**client_secret**|Your client secret|The client secret you obtain from the <a href="/developers">Developer Portal</a>|
 |**scope**|`user`|A list of scopes. Currently we support only one scope, "user"|
@@ -228,3 +181,52 @@ Scopes limit the type of access that an access token will allow. The Kangaroo Re
     </tr>
 </table>
 
+
+#### Login with Facebook Flow
+
+**1. Requesting Tokens**
+
+Access Token Request Endpoint:
+```
+https://api.kangaroorewards.com/oauth/token
+```
+
+Once you have created an application with type `password grant`, you may request an access token by issuing a POST request to
+the /oauth/token route with the Facebook User ID and Facebook Access token. If the request is successful, you will receive an access_token
+and refresh_token in the JSON response from the server.
+
+|Parameter|Values|Description|
+|-----|-----|-----------|
+|**client_id**|The client ID you obtain from the <a href="/developers">Developer Portal</a> when you registered your app|Identifies the client that is making the request. The value passed in this parameter must exactly match the value shown in the <a href="/developers">Developer Portal</a>|
+|**client_secret**|The client secret you obtain from the <a href="/developers">Developer Portal</a> when you registered your app|Identifies the client that is making the request. The value passed in this parameter must exactly match the value shown in the <a href="/developers">Developer Portal</a>|
+|**grant_type**|**facebook**|For Facebook Login grant|
+|**username**|**1111111**|Facebook User ID|
+|**password**|EAAD4m7nBqq4BABx|The Facebook Access Token|
+|**scope**|`user`|Scopes allow the clients to request a specific set of permissions when requesting authorization to access an account|
+|**application_key**|The Application Key|The business owner has to provide The Application Key. He can get it from his business portal.|
+
+Example Token Request
+
+```php
+$http = new GuzzleHttp\Client;
+
+$response = $http->post('https://api.kangaroorewards.com/oauth/token', [
+    'form_params' => [
+        'grant_type' => 'facebook',
+        'client_id' => '{YOUR_CLIENT_ID}',
+        'client_secret' => '{YOUR_CLIENT_SECRET}',
+        'username' => '11111111',
+        'facebook_token' => 'EAAD4m7nBqq4BABx...',
+        'application_key' => '{YOUR_APPLICATION_KEY}',
+        'scope' => 'user',
+    ],
+]);
+
+$token = json_decode((string) $response->getBody(), true);
+
+print_r($token);
+```
+
+> **Note.**
+> When a person logs into your app via Facebook Login **email** permission must be granted
+> Recommended scopes: public_profile, email, user_birthday, user_gender
