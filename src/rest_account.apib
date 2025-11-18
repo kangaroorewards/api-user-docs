@@ -83,7 +83,7 @@ Content-Type: application/json
 }
 ```
 
-Respone Body
+Response Body
 ```
 {
     "data": {
@@ -337,7 +337,7 @@ Content-Type: application/json
 }
 ```
 
-Example. Verify user's phone number'.
+Example. Verify user's phone number.
 
 ```
 POST /users/credentials/verification HTTP/1.1
@@ -377,7 +377,7 @@ An email or text message will be sent to included email/phone number with a toke
 |Name|Type|Description|
 |-----|----|-----------|
 |mode|string|Required. `token` or `verification_code`|
-|email|string|Required if no phone nuber provided|
+|email|string|Required if no phone number provided|
 |phone|string|Required if no email provided|
 |country_code|string|Required with phone number. The user's country, in ISO 3166-1-alpha-2 format.|
 
@@ -442,7 +442,7 @@ Allows to reset a user's PIN code. The token or verification code and user crede
 |token|string|Required if no verification_code provided|
 |verification_code|number|Required if no token provided|
 |pin_code|number|Required. The new PIN code|
-|email|string|Required if no phone nuber provided and verification_code included|
+|email|string|Required if no phone number provided and verification_code included|
 |phone|string|Required if no email provided and verification_code included|
 |country_code|string|Required with phone number. The user's country, in ISO 3166-1-alpha-2 format.|
 
